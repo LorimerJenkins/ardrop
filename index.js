@@ -8,8 +8,4 @@ const send_from_email = 'lorimerjenkins1@gmail.com'
 const public_private = 'private'
 
 
-// index.js
 
-const encryptFile = require('./encrypt.js');
-
-encryptFile('my_password', './boys.jpg');

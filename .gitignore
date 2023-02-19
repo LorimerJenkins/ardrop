@@ -1,5 +1,2 @@
-
-arweave_wallet.json
 node_modules
-salt.txt
-.DS_Store
+arweave/wallet.json

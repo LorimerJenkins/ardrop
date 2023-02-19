@@ -18,8 +18,10 @@
   },
   "homepage": "https://github.com/LorimerJenkins/ardrop#readme",
   "dependencies": {
+    "arweave": "^1.13.0",
     "crypto": "^1.0.1",
     "crypto-js": "^4.1.1",
-    "fs": "^0.0.1-security"
+    "fs": "^0.0.1-security",
+    "path": "^0.12.7"
   }
 }
