@@ -1,22 +1,25 @@
 {
   "name": "ardrop",
-  "private": true,
-  "version": "0.0.0",
-  "type": "module",
+  "version": "1.0.0",
+  "description": "an API to allow anyone to upload and send files using the Arweave blockchain and stealth auth protocol",
+  "main": "index.js",
+  "type": "commonjs",
   "scripts": {
-    "dev": "vite",
-    "build": "tsc && vite build",
-    "preview": "vite preview"
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/LorimerJenkins/ardrop.git"
+  },
+  "author": "Lorimer and Marton",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/LorimerJenkins/ardrop/issues"
+  },
+  "homepage": "https://github.com/LorimerJenkins/ardrop#readme",
   "dependencies": {
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0"
-  },
-  "devDependencies": {
-    "@types/react": "^18.0.27",
-    "@types/react-dom": "^18.0.10",
-    "@vitejs/plugin-react": "^3.1.0",
-    "typescript": "^4.9.3",
-    "vite": "^4.1.0"
+    "crypto": "^1.0.1",
+    "crypto-js": "^4.1.1",
+    "fs": "^0.0.1-security"
   }
 }
