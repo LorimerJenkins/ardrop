@@ -19,6 +19,20 @@ export default function UploadFile() {
   
     async function uploadToServer(file) {
         // send to server which messages the other party and uploads it to permaweb
+
+        const url = 'http://localhost:7777/file-upload';
+
+        fetch(url, {
+          method: 'POST',
+          body: file
+        })
+        .then(response => response.json())
+        .then(data => {
+          console.log(data)
+          // Handle response data here
+        })
+        .catch(error => console.error(error));
+
         return file
     }
 
