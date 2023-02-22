@@ -52,6 +52,7 @@ def home():
 @app.route('/file-upload', methods=['POST'])
 def file_upload():
     try:
+        nelson('lorimer')
         file = request.files['file']
         nelson(file)
         tx_id = upload_to_arweave(file)
