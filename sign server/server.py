@@ -52,7 +52,7 @@ def file_upload():
     try:
         nelson('lorimer')
         # file = request.files['file']
-        nelson(request)
+        nelson(str(request))
         tx_id = upload_to_arweave(file)
         return Response(dumps({'weavetransfer_status': 200, 'response': 'file uploaded', 'transaction_id': tx_id}), mimetype='text/json')
     except Exception as error:
