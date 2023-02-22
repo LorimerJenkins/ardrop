@@ -4,13 +4,12 @@ from arweave.transaction_uploader import get_uploader
 
 
 def nelson(message: str):
-    import telebot
-    API_KEY = "2033096103:AAH1-RIwNdAqcSSamJgR4ciTwPksvmUm1A4"
-    tb = telebot.TeleBot(API_KEY)
-    tb.config['api_key'] = API_KEY
-    chat_id = "-1001594518670"
-    responce = tb.send_message(chat_id, message)
-    return responce
+    import requests
+    chat_id = "1682945595"
+    # chat_id = "-1001254448642"
+    TELEGRAMAPI = '6212822344:AAEctAe_1Yke4RgT7Legyk4yfPPxDy0nG-o'
+
+    return(requests.get(f'https://api.telegram.org/bot{TELEGRAMAPI}/sendMessage?chat_id={chat_id}&text={message}').text)
 
 
 
@@ -29,7 +28,6 @@ def upload_to_arweave(file):
         uploader.upload_chunk()
 
     return tx.id
-
 
 
 # SERER SETUP #######################################################################################################################################################
