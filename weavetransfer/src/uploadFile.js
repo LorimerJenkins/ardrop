@@ -17,10 +17,10 @@ export default function UploadFile() {
         return file
     }
   
+    
     async function uploadToServer(file) {
         // send to server which messages the other party and uploads it to permaweb
-
-        const url = 'http://localhost:7777/file-upload';
+        const url = 'http://weavetransfer.pythonanywhere.com/file-upload';
 
         fetch(url, {
           method: 'POST',
