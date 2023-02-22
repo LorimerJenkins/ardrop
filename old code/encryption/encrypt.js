@@ -1,13 +1,13 @@
 // encrypt file
 
-const fs = require('fs');
-const crypto = require('crypto');
+import crypto from 'crypto'
+import fs from 'fs'
 
 
 // Function to encrypt a JPEG image with a password using AES algorithm
-function encryptJpegWithPassword(inputFile, outputFile, password) {
+export async function encrypt(inputFile, password) {
   // Read file data
-  const fileData = fs.readFileSync('encryption/example_images/' + inputFile);
+  const fileData = fs.readFileSync('input_files/' + inputFile);
 
   // Generate a random initialization vector (IV)
   const iv = crypto.randomBytes(16);
@@ -23,9 +23,8 @@ function encryptJpegWithPassword(inputFile, outputFile, password) {
 
   // Write the encrypted data and the IV to the output file
   const outputData = Buffer.concat([iv, encryptedData]);
-  fs.writeFileSync('encryption/encrypt_output/' + outputFile + '.enc', outputData);
+  const encrypted_file = 'input_files/encrypted_file.txt'
+  fs.writeFileSync(encrypted_file, outputData);
+  console.log('File encrypted')
+  return encrypted_file
 }
-
-
-
-encryptJpegWithPassword('boys.jpg', 'boys', '1234')

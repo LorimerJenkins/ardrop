@@ -1,5 +1,7 @@
-const fs = require('fs');
-const Arweave = require('arweave/node');
+import fs from 'fs'
+import Arweave from 'arweave/node/index.js';
+
+
 const arweave = Arweave.init({
   host: 'arweave.net',
   protocol: 'https',
@@ -7,19 +9,19 @@ const arweave = Arweave.init({
 });
 
 // Function to upload an encrypted file to Arweave
-async function uploadToArweave(file_name) {
+export async function upload(file_name) {
   // Read the encrypted file data
-  const data = fs.readFileSync('../encryption/encrypt_output/' + file_name);
+  const data = fs.readFileSync(file_name);
 
   // Read the Arweave wallet file
-  const wallet = JSON.parse(fs.readFileSync('wallet.json'));
+  const wallet = JSON.parse(fs.readFileSync('arweave/wallet.json'));
 
   // Create a Transaction object with the file data and metadata
   const transaction = await arweave.createTransaction({ data }, wallet);
 
   // Set the transaction tags with the metadata
   transaction.addTag('app', 'ArDrop'),
-  transaction.addTag('file_name', 'text.txt'),
+  transaction.addTag('file_name', file_name.toString()),
   transaction.addTag('contentType', 'text/plain')
 
   // Sign the transaction with the wallet
@@ -28,10 +30,8 @@ async function uploadToArweave(file_name) {
   // Broadcast the transaction to the network
   const response = await arweave.transactions.post(transaction);
 
-  console.log(`Transaction ID: ${transaction.id}`);
-  console.log(`Arweave response: ${response.status} ${response.statusText}`);
-  console.log(transaction)
+  if (response.status === 200) {
+    console.log(`File uploaded, ${transaction.id}`);
+    return transaction.id
+  } else {console.log('Failed to upload')}
 }
-
-
-uploadToArweave('boys.txt')

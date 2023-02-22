@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "an API to allow anyone to upload and send files using the Arweave blockchain and stealth auth protocol",
   "main": "index.js",
-  "type": "commonjs",
+  "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },

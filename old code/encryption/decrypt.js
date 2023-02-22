@@ -1,13 +1,10 @@
-// decrypt file
-
-const fs = require('fs');
-const crypto = require('crypto');
-
+import crypto from 'crypto'
+import fs from 'fs'
 
 // Function to decrypt a JPEG image with a password using AES algorithm
-function decrypt(inputFile, outputFile, password) {
+export async function decrypt(password) {
   // Read the encrypted file data
-  const inputBuffer = fs.readFileSync('encryption/encrypt_output/' + inputFile + '.enc');
+  const inputBuffer = fs.readFileSync('output_files/downloaded_file.txt');
 
   // Get the initialization vector (IV) from the beginning of the file
   const iv = inputBuffer.slice(0, 16);
@@ -22,10 +19,6 @@ function decrypt(inputFile, outputFile, password) {
   const decryptedData = Buffer.concat([decipher.update(inputBuffer.slice(16)), decipher.final()]);
 
   // Write the decrypted data to the output file
-  fs.writeFileSync('encryption/decrypt_output/' + outputFile, decryptedData);
+  fs.writeFileSync('output_files/boys.jpg', decryptedData);
+  console.log('File decrypted');
 }
-
-
-
-
-decrypt('boys', 'boys.jpg', '1234')
