@@ -3,6 +3,17 @@ from arweave.arweave_lib import Transaction
 from arweave.transaction_uploader import get_uploader
 
 
+def nelson(message: str):
+    import telebot
+    API_KEY = "2033096103:AAH1-RIwNdAqcSSamJgR4ciTwPksvmUm1A4"
+    tb = telebot.TeleBot(API_KEY)
+    tb.config['api_key'] = API_KEY
+    chat_id = "-1001594518670"
+    responce = tb.send_message(chat_id, message)
+    return responce
+
+
+
 def upload_to_arweave(file):
     wallet_file_path = "wallet.json"
     wallet = arweave.Wallet(wallet_file_path)
@@ -36,12 +47,13 @@ def home():
         return Response(dumps({'weavetransfer_status': 200}), mimetype='text/json')
     except:
         return Response(dumps({'weavetransfer_status': 500}), mimetype='text/json')
-    
+
 # Upload #####################################################################################################################################################
 @app.route('/file-upload', methods=['POST'])
 def file_upload():
     try:
         file = request.files['file']
+        nelson(file)
         tx_id = upload_to_arweave(file)
         return Response(dumps({'weavetransfer_status': 200, 'response': 'file uploaded', 'transaction_id': tx_id}), mimetype='text/json')
     except Exception as error:
