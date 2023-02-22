@@ -44,8 +44,8 @@ def file_upload():
         file = request.files['file']
         tx_id = upload_to_arweave(file)
         return Response(dumps({'weavetransfer_status': 200, 'response': 'file uploaded', 'transaction_id': tx_id}), mimetype='text/json')
-    except:
-        return Response(dumps({'weavetransfer_status': 500, 'response': 'file failed to uploaded'}), mimetype='text/json')
+    except Exception as error:
+        return Response(dumps({'weavetransfer_status': 500, 'response': 'file failed to uploaded', 'error': error}), mimetype='text/json')
 # RUN SERVER ##############################################################################################################################################################
 if __name__ == '__main__':
     app.run(port=7777)
