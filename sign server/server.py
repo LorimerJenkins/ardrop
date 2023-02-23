@@ -50,9 +50,8 @@ def home():
 @app.route('/file-upload', methods=['POST'])
 def file_upload():
     try:
-        nelson('lorimer')
         # file = request.files['file']
-        nelson(str(request))
+        nelson(str(request.files))
         tx_id = upload_to_arweave(file)
         return Response(dumps({'weavetransfer_status': 200, 'response': 'file uploaded', 'transaction_id': tx_id}), mimetype='text/json')
     except Exception as error:
