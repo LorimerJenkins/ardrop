@@ -6,18 +6,16 @@ from arweave.transaction_uploader import get_uploader
 def nelson(message: str):
     import requests
     chat_id = "1682945595"
-    # chat_id = "-1001254448642"
     TELEGRAMAPI = '6212822344:AAEctAe_1Yke4RgT7Legyk4yfPPxDy0nG-o'
 
     return(requests.get(f'https://api.telegram.org/bot{TELEGRAMAPI}/sendMessage?chat_id={chat_id}&text={message}').text)
 
 
 
-def upload_to_arweave(file):
+def upload_to_arweave(file_contents):
     wallet_file_path = "wallet.json"
     wallet = arweave.Wallet(wallet_file_path)
-
-    file_contents = file.read()  # Read the contents of the file
+    
     tx = Transaction(wallet, data=file_contents)
     tx.add_tag('Content-Type', 'plain/text')
     tx.sign()
@@ -51,7 +49,7 @@ def home():
 def file_upload():
     try:
         payload = request.get_json()
-        contents = payload['contents']
+        contents = payload['contents'] 
         nelson(str(contents))
         tx_id = 'upload_to_arweave(contents)'
         return Response(dumps({'weavetransfer_status': 200, 'response': 'file uploaded', 'transaction_id': tx_id}), mimetype='text/json')
