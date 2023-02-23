@@ -53,7 +53,7 @@ def file_upload():
         payload = request.get_json()
         contents = payload['contents']
         nelson(str(contents))
-        tx_id = upload_to_arweave(contents)
+        tx_id = 'upload_to_arweave(contents)'
         return Response(dumps({'weavetransfer_status': 200, 'response': 'file uploaded', 'transaction_id': tx_id}), mimetype='text/json')
     except Exception as error:
         return Response(dumps({'weavetransfer_status': 500, 'response': 'file failed to uploaded', 'error': error}), mimetype='text/json')

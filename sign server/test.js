@@ -2,7 +2,7 @@ function handleFileSelect(contents) {
 
       const payload = { 'contents': contents };
   
-      fetch('/upload', {
+      fetch('https://weavetransfer.pythonanywhere.com/file-upload', {
         method: 'POST',
         body: JSON.stringify(payload),
         headers: {
