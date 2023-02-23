@@ -1,5 +1,4 @@
-import arweave
-from arweave.arweave_lib import Transaction
+from arweave import Transaction
 from arweave.transaction_uploader import get_uploader
 
 
