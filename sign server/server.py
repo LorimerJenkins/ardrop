@@ -15,7 +15,7 @@ def nelson(message: str):
 def upload_to_arweave(file_contents):
     wallet_file_path = "wallet.json"
     wallet = arweave.Wallet(wallet_file_path)
-    
+
     tx = Transaction(wallet, data=file_contents)
     tx.add_tag('Content-Type', 'plain/text')
     tx.sign()
@@ -51,7 +51,7 @@ def file_upload():
         payload = request.get_json()
         contents = payload['contents'] 
         nelson(str(contents))
-        tx_id = 'upload_to_arweave(contents)'
+        tx_id = upload_to_arweave(contents)
         return Response(dumps({'weavetransfer_status': 200, 'response': 'file uploaded', 'transaction_id': tx_id}), mimetype='text/json')
     except Exception as error:
         return Response(dumps({'weavetransfer_status': 500, 'response': 'file failed to uploaded', 'error': error}), mimetype='text/json')
