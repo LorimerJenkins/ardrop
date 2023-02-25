@@ -8,6 +8,7 @@ export default function UploadFile() {
     event.preventDefault();
   }
 
+
   function handleFileUpload(event) {
     setFile(event.target.files[0]);
     console.log(event.target.files[0]);
@@ -16,25 +17,40 @@ export default function UploadFile() {
 
     reader.onload = () => {
       const fileContents = reader.result;
+      
 
-      const url = "http://weavetransfer.pythonanywhere.com/file-upload";
 
-      console.log(fileContents);
 
-      fetch(url, {
-        method: "POST",
-        body: fileContents,
+      const payload = { 'contents': fileContents };
+      
+      fetch('https://auth-arweave-server.herokuapp.com/upload', {
+        method: 'POST',
+        body: JSON.stringify(payload),
+        headers: {
+          'Content-Type': 'application/json'
+        }// add files names and shit here
       })
-        .then((response) => response.json())
-        .then((data) => {
-          console.log(data);
-          // Handle response data here
-        })
-        .catch((error) => console.error(error));
+      .then(response => response.text())
+      .then(responseText => {
+        console.log(responseText);
+      })
+      .catch(error => {
+        console.error(error);
+      });
     };
+
+
+
+
+
 
     reader.readAsText(event.target.files[0]);
   }
+
+
+
+
+
 
   function handleDrop(event) {
     // event.preventDefault();
