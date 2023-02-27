@@ -21,7 +21,7 @@
 
 .title {
   background-color: transparent;
-  margin-bottom: 5px;
+  margin-bottom: 0px;
 }
 .description {
   text-align: center;
@@ -36,7 +36,7 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  width: 100%;
+  width: 350px;
 }
 
 label {
@@ -86,7 +86,7 @@ label {
 }
 
 .transfer {
-  margin: 15px;
+  margin-top: 15px;
   height: 50px;
   width: 100%;
   cursor: pointer;
@@ -96,6 +96,12 @@ label {
   color: white;
   font-size: 16px;
   border-radius: 5px;
+  border: 1px solid #2375EF;
+}
+
+.transfer:hover {
+  color: #2375EF;
+  background-color: white;
 }
 
 .logo-container {
@@ -109,5 +115,124 @@ label {
   height: 45px;
 }
 
+
+.toggle-option {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  margin-bottom: 10px;
+  gap: 1px;
+}
+
+
+.upload {
+  width: 50%;
+  height: 50px;
+  outline: none;
+  cursor: pointer;
+  border-radius: 5px 0px 0px 5px;
+  border: 1px solid #2375EF;
+  background-color: #2375EF;
+  color: white;
+  font-size: 16px;
+}
+.upload:hover {
+  background-color: white;
+  color: #2375EF;
+  border: 1px solid #2375EF;
+}
+
+.download {
+  width: 50%;
+  height: 50px;
+  outline: none;
+  cursor: pointer;
+  border-radius: 0px 5px 5px 0px;
+  border: 1px solid #2375EF;
+  background-color: #2375EF;
+  color: white;
+  font-size: 16px;
+}
+.download:hover {
+  background-color: white;
+  color: #2375EF;
+  border: 1px solid #2375EF;
+}
+
+
+
+
+.upload-box {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  width: 350px;
+}
+
+.download-box {
+  color: black;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  width: 350px;
+}
+
+
+
+.download-input {
+  width: 90%;
+  outline: none;
+  background-color: white;
+  border: 2px dotted black;
+  font-size: 16px;
+  padding: 5%;
+  border-radius: 5px;
+}
+
+
+.upload-button {
+  margin-top: 15px;
+  height: 50px;
+  width: 100%;
+  cursor: pointer;
+  background-color: #2375EF;
+  outline: none;
+  border: 0;
+  color: white;
+  font-size: 16px;
+  border-radius: 5px;
+  border: 1px solid #2375EF;
+}
+
+.upload-button:hover {
+  color: #2375EF;
+  background-color: white;
+}
+
+.download-button {
+  margin-top: 15px;
+  height: 50px;
+  width: 100%;
+  cursor: pointer;
+  background-color: #2375EF;
+  outline: none;
+  border: 0;
+  color: white;
+  font-size: 16px;
+  border-radius: 5px;
+  border: 1px solid #2375EF;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+}
+
+.download-button:hover {
+  color: #2375EF;
+  background-color: white;
+}
 
 

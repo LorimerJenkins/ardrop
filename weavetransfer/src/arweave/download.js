@@ -11,8 +11,5 @@ export async function download(transactionId) {
 
   // Download the data for the confirmed transaction
   const data = await arweave.transactions.getData(transactionId, { decode: true });
-
-  // Return the downloaded data
-  fs.writeFileSync('output_files/downloaded_file.txt', data);
-  return 'output_files/downloaded_file.txt'
+  console.log(data)
 }
