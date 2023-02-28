@@ -1,23 +1,34 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import UploadFile from "./uploadFile.js";
 import backgroundImage from "./images/arbackground.png";
-import google from "./images/google.png";
-import downloadFile from "./downloadFile.js";
-
+import loading_gif from './images/loading.gif'
+import share_link from './images/share_link.png'
 
 const MALE = 'MALE'
 const FEMALE = 'FEMALE'
 
 function App() {
 
+
+  const path = window.location.pathname.substring(1)
+  console.log(path)
+  if (path != '') {
+    
+    window.open(`https://arweave.net/${path}`);
+  }
+
+
+
   const [visible, setVisible] = useState(null)
   const isMale = visible === MALE
   const isFemale = visible === FEMALE
 
-
-
   const [file, setFile] = useState(null);
   const [fileName, setFileName] = useState("");
+
+  const [loading, setLoading] = useState(false);
+
+  const [transaction_id, setTransactionId] = useState("");
 
   function handleFileUpload(event) {
     const file = event.target.files[0];
@@ -31,6 +42,8 @@ function App() {
       console.log("No file selected");
       return;
     }
+
+    setLoading(true); // Set loading to true when the upload button is clicked
 
     const reader = new FileReader();
 
@@ -46,32 +59,28 @@ function App() {
         body: JSON.stringify(payload),
         headers: {
           "Content-Type": "application/json",
-          file_name,
-          file_type,
+          'file_name': file_name,
+          'file_type': file_type
         },
       })
         .then((response) => response.text())
         .then((responseText) => {
           console.log(responseText);
-          console.log('Refresh file and also now enable viewing on view block')
+          setLoading(false); // Set loading back to false once the response is received
+          setTransactionId(JSON.parse(responseText).transactionId); // Set the transaction ID state value
+          setFileName(""); // Clear the file name
+          setFile(null); // Clear the file object
         })
         .catch((error) => {
           console.error(error);
+          setLoading(false); // Set loading back to false if there is an error
         });
     };
 
     reader.readAsText(file);
   }
 
-
-  // get download txn ID 
-  const [transaction_id, setTxValue] = useState('');
-  const handleTxChange = (event) => {
-    setTxValue(event.target.value);
-  }
-  const downloadLink = `https://arweave.net/${transaction_id}/data`;
-
-
+  const downloadLink = transaction_id ? `/${transaction_id}` : '';
 
   return (
     <div
@@ -95,41 +104,52 @@ function App() {
           <button className="download" onClick={() => setVisible(FEMALE)}>Download</button>
         </div>
 
-
         <div className="row">
           {
             isMale && (
               <div className="upload-box">
-              {/* <img src={google} className="google" alt="Google logo" /> */}
-              <form onSubmit={handleSubmit}>
-                <UploadFile onChange={handleFileUpload} fileName={fileName} />
-                <button className="transfer" type="submit">Upload</button>
-              </form>
-            </div>
-            )
-          }
-          {
-            isFemale && (
-              <div className="download-box">
+                <form onSubmit={handleSubmit}>
+                {loading ? (
+                  <div className="spinner-container">
+                      <p className="spinner-text">Uploading</p>
+                      <img className="spinner_gif" src={loading_gif} />
+                  </div>
+                ) : (
+                  <>
+                    <UploadFile onChange={handleFileUpload} fileName={fileName} />
+
+                    {transaction_id && (
+                <div className="download-link">
+                  <p className="success-text">Success: </p>
+                  <a className="download-link-a" target='_blank' href={`/${transaction_id}`}>
+                    <img src={share_link} className='share-icon' />
+                    <p className="download-p">weavetransfer.com/{transaction_id}</p>
+                  </a>
+              </div>
+              )}
+
+              <button className="transfer" type="submit">Upload</button>
+            </>
+          )}
+          </form>
+        </div>
+        )}
+        {
+          isFemale && (
+            <div className="download-box">
               <input className="download-input" 
-              placeholder="Transaction ID: "
-              value={transaction_id}
-              onChange={handleTxChange}
+                placeholder="Transaction ID: "
+                value={transaction_id}
+                onChange={(event) => setTransactionId(event.target.value)}
               ></input>
-              <a href={downloadLink} className="download-button" target="_blank">Download</a>
+              <a href={downloadLink} className="download-button" target="_blank" rel="noreferrer">Download</a>
             </div>
-            )
-          }
-      </div>
-        
-        
-
-        
-
-
+          )
+        }
       </div>
     </div>
-  );
+  </div>
+);
 }
 
 export default App;

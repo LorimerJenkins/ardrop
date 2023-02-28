@@ -25,6 +25,7 @@
 }
 .description {
   text-align: center;
+  margin-bottom: 25px;
 }
 
 
@@ -236,3 +237,59 @@ label {
 }
 
 
+
+.spinner_gif {
+  height: 16px;
+}
+.spinner-container {
+  margin-top: 15px;
+  height: 50px;
+  width: 350px;
+  cursor: pointer;
+  background-color: #2375EF;
+  outline: none;
+  border: 0;
+  color: white;
+  font-size: 16px;
+  border-radius: 5px;
+  border: 1px solid #2375EF;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+}
+.spinner-text {
+  font-size: 16px;
+  margin-right: 7px;
+}
+
+
+.download-link {
+  margin-top: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: left;
+}
+.download-link-a {
+  color: #2375EF;
+  font-size: 16px;
+  text-decoration: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.share-icon {
+  height: 13px;
+  margin-right: 5px;
+}
+.download-p {
+  font-size: 16px;
+  width: 100px;
+  overflow: auto;
+  margin: o;
+}
+.success-text {
+  margin-right: 5px;
+  color: green;
+  font-size: 16px;
+}
