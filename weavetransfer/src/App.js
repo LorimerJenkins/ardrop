@@ -11,10 +11,9 @@ function App() {
 
 
   const path = window.location.pathname.substring(1)
-  console.log(path)
-  if (path != '') {
-    
+  if (path !== '') {
     window.open(`https://arweave.net/${path}`);
+    console.log('open')
   }
 
 
@@ -27,6 +26,7 @@ function App() {
   const [fileName, setFileName] = useState("");
 
   const [loading, setLoading] = useState(false);
+  const [requestStatus, setRequestStatus] = useState('');
 
   const [transaction_id, setTransactionId] = useState("");
 
@@ -39,7 +39,7 @@ function App() {
   function handleSubmit(event) {
     event.preventDefault();
     if (!file) {
-      console.log("No file selected");
+      alert("No file selected to upload");
       return;
     }
 
@@ -65,22 +65,26 @@ function App() {
       })
         .then((response) => response.text())
         .then((responseText) => {
-          console.log(responseText);
+          const response_json = JSON.parse(responseText)
           setLoading(false); // Set loading back to false once the response is received
-          setTransactionId(JSON.parse(responseText).transactionId); // Set the transaction ID state value
+          setTransactionId(response_json.transactionId); // Set the transaction ID state value
           setFileName(""); // Clear the file name
           setFile(null); // Clear the file object
+          if (response_json.success == true) {
+            setRequestStatus('success');
+          } else {setRequestStatus('failed');}
         })
         .catch((error) => {
           console.error(error);
           setLoading(false); // Set loading back to false if there is an error
+          setRequestStatus('failed'); // Set the request status to failed
         });
     };
 
     reader.readAsText(file);
   }
 
-  const downloadLink = transaction_id ? `/${transaction_id}` : '';
+  const downloadLink = transaction_id ? `https://arweave.net/${transaction_id}` : '';
 
   return (
     <div
@@ -118,15 +122,19 @@ function App() {
                   <>
                     <UploadFile onChange={handleFileUpload} fileName={fileName} />
 
-                    {transaction_id && (
+                    {transaction_id && requestStatus === 'success' && (
                 <div className="download-link">
                   <p className="success-text">Success: </p>
-                  <a className="download-link-a" target='_blank' href={`/${transaction_id}`}>
+                  <a className="download-link-a" target='_blank' href={`https://arweave.net/${transaction_id}`}>
                     <img src={share_link} className='share-icon' />
                     <p className="download-p">weavetransfer.com/{transaction_id}</p>
                   </a>
               </div>
               )}
+              
+              {requestStatus === 'failed' && (
+                      <p className="error-text">Failed to upload!</p>
+                  )}
 
               <button className="transfer" type="submit">Upload</button>
             </>
