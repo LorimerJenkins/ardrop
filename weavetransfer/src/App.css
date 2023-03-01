@@ -265,7 +265,7 @@ label {
 
 
 .download-link {
-  margin-top: 10px;
+  margin-top: 5px;
   display: flex;
   align-items: center;
   justify-content: left;
@@ -299,4 +299,8 @@ label {
   font-size: 16px;
   margin-bottom: 0;
   margin-top: 10px;
+}
+
+.tx-id-text {
+
 }

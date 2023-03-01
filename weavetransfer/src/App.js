@@ -43,7 +43,12 @@ function App() {
       return;
     }
 
-    setLoading(true); // Set loading to true when the upload button is clicked
+    setLoading(true); 
+
+
+
+// show tate here
+
 
     const reader = new FileReader();
 
@@ -63,21 +68,24 @@ function App() {
           'file_type': file_type
         },
       })
+
+
+// to here
         .then((response) => response.text())
         .then((responseText) => {
           const response_json = JSON.parse(responseText)
-          setLoading(false); // Set loading back to false once the response is received
-          setTransactionId(response_json.transactionId); // Set the transaction ID state value
-          setFileName(""); // Clear the file name
-          setFile(null); // Clear the file object
+          setLoading(false);
+          setTransactionId(response_json.transactionId); 
+          setFileName(""); 
+          setFile(null); 
           if (response_json.success == true) {
             setRequestStatus('success');
           } else {setRequestStatus('failed');}
         })
         .catch((error) => {
           console.error(error);
-          setLoading(false); // Set loading back to false if there is an error
-          setRequestStatus('failed'); // Set the request status to failed
+          setLoading(false); 
+          setRequestStatus('failed'); 
         });
     };
 
@@ -123,13 +131,14 @@ function App() {
                     <UploadFile onChange={handleFileUpload} fileName={fileName} />
 
                     {transaction_id && requestStatus === 'success' && (
-                <div className="download-link">
-                  <p className="success-text">Success: </p>
-                  <a className="download-link-a" target='_blank' href={`https://arweave.net/${transaction_id}`}>
-                    <img src={share_link} className='share-icon' />
-                    <p className="download-p">weavetransfer.com/{transaction_id}</p>
-                  </a>
-              </div>
+                      <div>
+                          <div className="download-link">
+                            <p className="success-text">File ID: </p>
+                            <a className="download-link-a" target='_blank' href={`https://arweave.net/${transaction_id}`}>
+                              <p className="download-p">weavetransfer.com/{transaction_id}</p>
+                            </a>
+                          </div>
+                        </div>
               )}
               
               {requestStatus === 'failed' && (
