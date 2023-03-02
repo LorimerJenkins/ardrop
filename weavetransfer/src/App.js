@@ -3,6 +3,8 @@ import UploadFile from "./uploadFile.js";
 import backgroundImage from "./images/arbackground.png";
 import loading_gif from './images/loading.gif'
 import share_link from './images/share_link.png'
+import { Buffer } from 'buffer';
+
 
 const MALE = 'MALE'
 const FEMALE = 'FEMALE'
@@ -50,47 +52,47 @@ function App() {
 // show tate here
 
 
-    const reader = new FileReader();
+const reader = new FileReader();
 
-    reader.onload = () => {
-      const fileContents = reader.result;
+reader.onload = () => {
+  let fileContents = reader.result;
+  fileContents = Buffer.from(fileContents).toString('base64');
 
-      const payload = { contents: fileContents };
-      const file_name = file.name;
-      const file_type = file.type;
+  const payload = { contents: fileContents };
+  const file_name = file.name;
+  const file_type = file.type;
 
-      fetch("https://auth-arweave-server.herokuapp.com/upload", {
-        method: "POST",
-        body: JSON.stringify(payload),
-        headers: {
-          "Content-Type": "application/json",
-          'file_name': file_name,
-          'file_type': file_type
-        },
+  fetch("https://server.weavetransfer.com/upload", {
+    method: "POST",
+    body: JSON.stringify(payload),
+    headers: {
+      "Content-Type": "application/json",
+      'file_name': file_name,
+      'file_type': file_type
+    },
+  })
+      .then((response) => response.text())
+      .then((responseText) => {
+        const response_json = JSON.parse(responseText)
+        setLoading(false);
+        setTransactionId(response_json.transactionId); 
+        setFileName(""); 
+        setFile(null); 
+        if (response_json.success == true) {
+          setRequestStatus('success');
+        } else {setRequestStatus('failed');}
       })
-
-
-// to here
-        .then((response) => response.text())
-        .then((responseText) => {
-          const response_json = JSON.parse(responseText)
-          setLoading(false);
-          setTransactionId(response_json.transactionId); 
-          setFileName(""); 
-          setFile(null); 
-          if (response_json.success == true) {
-            setRequestStatus('success');
-          } else {setRequestStatus('failed');}
-        })
-        .catch((error) => {
+      .catch(error => {
+        if (error.message === '413') {
+          console.log('hello');
+        } else {
           console.error(error);
-          setLoading(false); 
-          setRequestStatus('failed'); 
-        });
-    };
+        }
+      });
+    }
 
-    reader.readAsText(file);
-  }
+  reader.readAsText(file);
+}
 
   const downloadLink = transaction_id ? `https://arweave.net/${transaction_id}` : '';
 
