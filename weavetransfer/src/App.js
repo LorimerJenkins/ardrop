@@ -2,8 +2,6 @@ import React, { useEffect, useState } from "react";
 import UploadFile from "./uploadFile.js";
 import backgroundImage from "./images/arbackground.png";
 import loading_gif from './images/loading.gif'
-import share_link from './images/share_link.png'
-import { Buffer } from 'buffer';
 
 
 const MALE = 'MALE'
@@ -23,14 +21,16 @@ function App() {
   const [visible, setVisible] = useState(null)
   const isMale = visible === MALE
   const isFemale = visible === FEMALE
-
   const [file, setFile] = useState(null);
   const [fileName, setFileName] = useState("");
-
   const [loading, setLoading] = useState(false);
-  const [requestStatus, setRequestStatus] = useState('');
-
+  const [requestStatus, setRequestStatus] = useState("");
   const [transaction_id, setTransactionId] = useState("");
+  const [message, setMessage] = useState("")
+
+
+
+
 
   function handleFileUpload(event) {
     const file = event.target.files[0];
@@ -53,6 +53,7 @@ function App() {
     formData.append("file", file);
     formData.append("file_name", file.name);
     formData.append("file_type", file.type);
+    formData.append("message", message);
   
     fetch('https://server.weavetransfer.com/upload', {
       method: 'POST',
@@ -103,7 +104,7 @@ function App() {
           <h1 className="title">Weave Transfer</h1>
         </span>
         <p className="description">
-          Permanent file transfer and storage using the Arweave permaweb and Authy walletless protocol.
+          Permanent public on-chain storage file transfer system using the Arweave permaweb and Authy walletless protocol.
         </p>
 
         <div className="toggle-option">
@@ -124,6 +125,10 @@ function App() {
                 ) : (
                   <>
                     <UploadFile onChange={handleFileUpload} fileName={fileName} />
+
+                    <input className="message-input" 
+                    placeholder="Message (optional)" 
+                    value={message} onChange={(event) => setMessage(event.target.value)} />
 
                     {transaction_id && requestStatus === 'success' && (
                       <div>
