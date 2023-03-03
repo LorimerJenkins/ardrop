@@ -67,6 +67,7 @@ function App() {
         setFile(null);
         if (data.success === true) {
           setRequestStatus('success');
+          setMessage("")
         } else {
           setRequestStatus('failed');
         }
@@ -134,8 +135,9 @@ function App() {
                       <div>
                           <div className="download-link">
                             <p className="success-text">File ID: </p>
-                            <a className="download-link-a" target='_blank' href={`https://arweave.net/${transaction_id}`}>
-                              <p className="download-p">weavetransfer.com/{transaction_id}</p>
+                            <a className="download-link-a" target='_blank' 
+                            href={`https://arweave.net/${transaction_id}`}>
+                              weavetransfer.com/{transaction_id}
                             </a>
                           </div>
                         </div>
