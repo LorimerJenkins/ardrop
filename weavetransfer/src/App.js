@@ -38,61 +38,54 @@ function App() {
     setFileName(file.name);
   }
 
+
+
   function handleSubmit(event) {
     event.preventDefault();
     if (!file) {
       alert("No file selected to upload");
       return;
     }
-
-    setLoading(true); 
-
-
-
-// show tate here
-
-
-const reader = new FileReader();
-
-reader.onload = () => {
-  let fileContents = reader.result;
-  fileContents = Buffer.from(fileContents).toString('base64');
-
-  const payload = { contents: fileContents };
-  const file_name = file.name;
-  const file_type = file.type;
-
-  fetch("https://server.weavetransfer.com/upload", {
-    method: "POST",
-    body: JSON.stringify(payload),
-    headers: {
-      "Content-Type": "application/json",
-      'file_name': file_name,
-      'file_type': file_type
-    },
-  })
-      .then((response) => response.text())
-      .then((responseText) => {
-        const response_json = JSON.parse(responseText)
+  
+    setLoading(true);
+  
+    const formData = new FormData();
+    formData.append("file", file);
+    formData.append("file_name", file.name);
+    formData.append("file_type", file.type);
+  
+    fetch('https://server.weavetransfer.com/upload', {
+      method: 'POST',
+      body: formData,
+    })
+      .then((response) => response.json())
+      .then((data) => {
         setLoading(false);
-        setTransactionId(response_json.transactionId); 
-        setFileName(""); 
-        setFile(null); 
-        if (response_json.success == true) {
+        setTransactionId(data.transactionId);
+        setFileName("");
+        setFile(null);
+        if (data.success === true) {
           setRequestStatus('success');
-        } else {setRequestStatus('failed');}
-      })
-      .catch(error => {
-        if (error.message === '413') {
-          console.log('hello');
         } else {
-          console.error(error);
+          setRequestStatus('failed');
         }
+      })
+      .catch((error) => {
+        console.error(error);
+        setRequestStatus('failed');
+        setLoading(false);
       });
-    }
+  
 
-  reader.readAsText(file);
-}
+  }
+  
+
+
+
+
+
+
+
 
   const downloadLink = transaction_id ? `https://arweave.net/${transaction_id}` : '';
 
