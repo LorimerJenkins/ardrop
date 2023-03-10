@@ -55,7 +55,7 @@ function App() {
     formData.append("file_type", file.type);
     formData.append("message", message);
   
-    fetch('https://server.weavetransfer.com/upload', {
+    fetch('https://server.weavetransfer.com/weavetransfer', {
       method: 'POST',
       body: formData,
     })
